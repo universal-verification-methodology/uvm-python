@@ -24,7 +24,7 @@
 from typing import List
 
 import cocotb
-from cocotb.triggers import Event
+from cocotb.triggers import Timer, Event
 
 from .sv import sv, uvm_split_string
 from .uvm_component import UVMComponent
@@ -44,7 +44,6 @@ from .uvm_common_phases import UVMEndOfElaborationPhase
 from ..macros import uvm_info, uvm_fatal, uvm_warning, UVM_DEFAULT_TIMEOUT
 from ..uvm_macros import UVM_STRING_QUEUE_STREAMING_PACK
 from .uvm_config_db import UVMConfigDb
-from .uvm_exceptions import UVMFinishError
 
 MULTI_TESTS = ("Multiple ({}) +UVM_TESTNAME arguments provided on the command"
         + "line. '{}' will be used.  Provided list: {}.")
@@ -354,8 +353,9 @@ class UVMRoot(UVMComponent):
         # do the pre_abort callbacks
         self.m_do_pre_abort()
         l_rs.report_summarize()
+        #$finish
         if UVMRoot.raise_exception_on_die:
-            raise UVMFinishError('die(): $finish from UVMRoot')
+            raise Exception('die(): $finish from UVMRoot')
 
     def running_test_msg(self, test_name, uvm_test_top):
         if test_name == "":

@@ -13,9 +13,3 @@ class TLMError(Exception):
     fails
     """
     pass
-
-class UVMFinishError(Exception):
-    """
-    Exception which is thrown when the test is finished
-    """
-    pass
